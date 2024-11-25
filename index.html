@@ -3,52 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exciting Event</title>
+    <title>SDE Tips Event</title>
     <link rel="stylesheet" href="stylesss.css">
 </head>
 <body>
     <header class="header">
-    <div class="poster">
-        <img src="event-poster.jpg" alt="Event Poster">
-    </div>
+        <div class="container">
+            <h1>SDE Tips Event</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#register">Register</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-
-    <main>
-    <!-- Event Description -->
-    <section class="description">
-        <h1>Welcome to [Event Name]</h1>
-        <p>
-        Join us for an exciting session on <strong>SDE Tips</strong> with top industry experts! 
-        Learn about the latest trends, network with professionals, and gain invaluable insights 
-        for your career journey.
-        </p>
-        <p><strong>Date:</strong> [22 OCTOBER] | <strong>Time:</strong> [12:00 pm - 1:00 pm]</p>
-        <p><strong>Location:</strong> [Insert Location/Online]</p>
+    <section class="hero">
+        <div class="container">
+            <h2>Join our SDE Tips Webinar</h2>
+            <p>Learn from top software engineers and improve your coding skills.</p>
+            <a href="#register" class="btn">Register Now</a>
+        </div>
     </section>
-
-    <!-- Registration Form -->
-    <section class="registration">
-        <h2>Register Now</h2>
-        <form action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST">
-        <input type="text" name="entry.1234567890" placeholder="Full Name" required>
-        <input type="email" name="entry.2345678901" placeholder="Email Address" required>
-        <input type="tel" name="entry.3456789012" placeholder="Contact Number" required>
-        <input type="text" name="entry.4567890123" placeholder="College" required>
-        <input type="text" name="entry.5678901234" placeholder="Branch" required>
-        <input type="text" name="entry.6789012345" placeholder="Year" required>
-        <button type="submit">Submit</button>
-        </form>
+    <section id="about" class="about">
+        <div class="container">
+            <h3>About the Event</h3>
+            <p>Our SDE Tips webinar is designed to help aspiring software developers. Join us for an insightful session with industry experts.</p>
+        </div>
     </section>
-
-    <!-- Other Event Details -->
-    <section class="details">
-        <h2>Event Highlights</h2>
-        <ul>
-        <li>Expert Sessions</li>
-        <li>Networking Opportunities</li>
-        <li>Free Resources & Giveaways</li>
-        </ul>
+    <section id="schedule" class="schedule">
+        <div class="container">
+            <h3>Schedule</h3>
+            <ul>
+                <li><strong>10:00 AM</strong> - Introduction</li>
+                <li><strong>10:30 AM</strong> - Session 1: Coding Best Practices</li>
+                <li><strong>11:30 AM</strong> - Break</li>
+                <li><strong>12:00 PM</strong> - Session 2: Career Tips</li>
+            </ul>
+        </div>
     </section>
-    </main>
+    <section id="register" class="register">
+        <div class="container">
+            <h3>Register</h3>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Number:</label>
+                    <input type="tel" id="contact" name="contact" required>
+                </div>
+                <div class="form-group">
+                    <label for="college">College Name:</label>
+                    <input type="text" id="college" name="college" required>
+                </div>
+                <div class="form-group">
+                    <label for="branch">Branch:</label>
+                    <input type="text" id="branch" name="branch" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="number" id="year" name="year" required>
+                </div>
+                <button type="submit">Register</button>
+                <p id="responseMessage"></p>
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SDE Tips Event. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const responseMessage = document.getElementById('responseMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(form);
+            const formObject = Object.fromEntries(formData.entries());
+
+            console.log('Form Data:', formObject);  // Debugging step
+
+            try {
+                // Send data to Google Apps Script URL
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxnEk-IbOiSnh0J5pId5EQ33qp-hi7s_aWDxNbFcZgKhYoPrWIdt5nxgTQn_w69RAg6zQ/exec', {
+                    method: 'POST',
+                    body: new URLSearchParams(formObject)
+                });
+
+                console.log('Response:', response);  // Debugging step
+
+                if (response.ok) {
+                    responseMessage.textContent = 'Form submitted successfully!';
+                    responseMessage.style.color = 'green';
+                    form.reset();
+                } else {
+                    responseMessage.textContent = 'Failed to submit the form. Please try again.';
+                    responseMessage.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Error:', error);  // Debugging step
+                responseMessage.textContent = 'An error occurred. Please try again.';
+                responseMessage.style.color = 'red';
+            }
+        });
+    </script>
 </body>
 </html>
